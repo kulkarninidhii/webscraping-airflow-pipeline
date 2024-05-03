@@ -1,0 +1,33 @@
+version: 2
+
+models:  
+  - name: summary_table
+    description: "A summary table aggregating data about CFA articles."
+    columns:
+      - name: level
+        description: "Level of the Article"
+        tests:
+          - not_null
+          - accepted_values:
+              values: [1, 2, 3]
+              quote: false
+         
+      - name: topic
+        description: "Topics of the data"
+        tests:
+          - not_null
+
+      - name: year
+        description: "Curriculum year for the articles"
+        tests:
+          - not_null
+          - accepted_values:
+              values: [2018, 2019, 2020, 2021, 2022, 2023]
+              quote: true
+
+      - name: number_of_articles
+        description: "Total number of articles"
+        tests:
+          - not_null
+          - greater_than:
+              value: 0
