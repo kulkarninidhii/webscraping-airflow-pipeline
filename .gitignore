@@ -18,6 +18,7 @@ airflow_login.py
 dbinit.py
 initdb.py
 secrets.py
+.env
 
 ####################################################################
 # Airflow sqlite databases
