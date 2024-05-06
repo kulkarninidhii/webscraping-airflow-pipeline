@@ -1,0 +1,22 @@
+version: '3.8'
+
+services:
+  streamlit:
+    image: streamlit1:latest  # Ensure there is a space after the colon. Specify an image version if needed.
+    # build: Uncomment these lines if you're building from a Dockerfile instead of using an existing image.
+    #   context: .
+    #   dockerfile: Dockerfile
+    ports:
+      - "8501:8501"  # Maps port 8501 on the host to port 8501 in the container.
+    volumes:
+      - ~/Assignment4/streamlit_app/streamlit_app.py:/app/streamlit/streamlit_app.py
+      - ~/Assignment4/streamlit_app/pages/extraction.py:/app/streamlit/pages/extraction.py
+      - ~/Assignment4/streamlit_app/.env:/app/streamlit/.env
+    command: streamlit run --server.port=8501 --server.address=0.0.0.0 /app/streamlit/streamlit_app.py
+    networks:
+      - airflow_app_default
+    # The `command` line is added to specify how Streamlit should be started, including the script to run.
+
+networks:
+  airflow_app_default:
+    external: true
