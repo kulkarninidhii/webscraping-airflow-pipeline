@@ -1,0 +1,39 @@
+version: '3.8'
+services:
+  displayapi:
+    build: .
+    ports:
+      - "8000:8000"
+    environment:
+      - AWS_ACCESS_KEY_ID=your_access_key
+      - AWS_SECRET_ACCESS_KEY=your_secret_key
+      - AWS_BUCKET_NAME=your_bucket_name
+    command: uvicorn displayapi:app --host 0.0.0.0 --port 8000 --reload
+    volumes:
+      - ~/Assignment4/fastapi/displayapi.py:/app/displayapi.py
+      - ~/Assignment4/fastapi/uploadendapi.py:/app/uploadendapi.py
+      - ~/Assignment4/fastapi/.env:/app/.env
+    networks:
+      - airflow_app_default
+
+
+  uploadendapi:
+    build: .
+    ports:
+      - "8001:8001"
+    environment:
+      - AWS_ACCESS_KEY_ID=your_access_key
+      - AWS_SECRET_ACCESS_KEY=your_secret_key
+      - AWS_BUCKET_NAME=your_bucket_name
+    command: uvicorn uploadendapi:app --host 0.0.0.0 --port 8001 --reload
+    volumes:
+      - ~/Assignment4/fastapi/displayapi.py:/app/displayapi.py
+      - ~/Assignment4/fastapi/uploadendapi.py:/app/uploadendapi.py
+      - ~/Assignment4/fastapi/.env:/app/.env
+    networks:
+      - airflow_app_default
+
+networks:
+  airflow_app_default:
+    external: true
+
